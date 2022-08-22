@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { remark } from "remark";
+import remarkHtml from "remark-html";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 console.log(`process.cwd => ${process.cwd()}`);
@@ -37,4 +39,37 @@ export function getSortedPostsData() {
             return -1;
         }
     });
+}
+
+// posts 폴더안에 파일명만 구해서 리턴
+export function getAllPostIds() {
+    const fileNames = fs.readdirSync(postsDirectory);
+
+    return fileNames.map((fileName) => {
+        // posts 폴더안에 확장자 md로 끝나는 파일  확장자 지우기
+        return {
+            params: {
+                id: fileName.replace(/\.md$/, ""),
+            },
+        };
+    });
+}
+
+export async function getPostData(id: string) {
+    console.info("getPostData", id);
+    const fullPath = path.join(postsDirectory, `${id}.md`);
+    const fileContents = fs.readFileSync(fullPath, "utf-8");
+
+    // 마크다운파일 obj 형태 생성
+    const matterResult = matter(fileContents);
+
+    // 마크다운 파일 html 형태로 리턴
+    const processedContent = await remark().use(remarkHtml).process(matterResult.content);
+    const contentHtml = processedContent.toString();
+
+    return {
+        id, // ****.md 파일 에 확장자 지운 앞부분을 id로 설정
+        contentHtml,
+        ...(matterResult.data as { date: string; title: string }),
+    };
 }
