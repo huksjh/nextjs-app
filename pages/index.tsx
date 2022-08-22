@@ -2,7 +2,7 @@ import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { getSortedPostsData } from '../lib/post'
-import styles from '../styles/Home.module.css'
+import homeStyles from '../styles/Home.module.css'
 
 const Home = ({allPostsData}:{
   allPostsData:{
@@ -16,23 +16,23 @@ const Home = ({allPostsData}:{
    */
 }) => {
   return (
-    <div className={styles.container}>
+    <div className={homeStyles.container}>
       <Head>
         <title>Your Name</title>
       </Head>
 
-      <section className={styles.headingMd}>
+      <section className={homeStyles.headingMd}>
         <p>[huks Introduction]</p>
         <p>(This is a website)</p>
       </section>
-      <section className={`${styles.headingMd}${styles.padding1px}`}>
-        <h2 className={styles.headingLg}>Blog</h2>
-        <ul className={styles.List}>
+      <section className={`${homeStyles.headingMd}${homeStyles.padding1px}`}>
+        <h2 className={homeStyles.headingLg}>Blog</h2>
+        <ul className={homeStyles.List}>
           {allPostsData.map(({id, title, date}) => 
-            <li className={styles.listItem} key={id}>
+            <li className={homeStyles.listItem} key={id}>
               <a>{title}</a>
               <br />
-              <small className={styles.lightText}>{date}</small>
+              <small className={homeStyles.lightText}>{date}</small>
             </li>
           )}
         </ul>
