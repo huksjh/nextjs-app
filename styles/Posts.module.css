@@ -1,0 +1,42 @@
+.container {
+    max-width: 36rem;
+    padding: 0 1rem;
+    margin: 3rem auto 6rem;
+}
+.title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: slateblue;
+}
+.date {
+    font-weight: 900;
+}
+.article {
+    padding: 10px;
+    border: 1px solid darkcyan;
+}
+.headingMd {
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+.padding1px {
+    padding-top: 1px;
+}
+.headingLg {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin: 1rem 0;
+}
+.List {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.listItem {
+    margin: 0 0 1.25rem;
+}
+.lightText {
+    color: rgb(219, 124, 124);
+}
