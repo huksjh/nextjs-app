@@ -4,13 +4,14 @@ import matter from "gray-matter";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 
+// 루트 폴더에 posts 라는 폴더경로
 const postsDirectory = path.join(process.cwd(), "posts");
 console.log(`process.cwd => ${process.cwd()}`);
 console.log(`postDirectory => ${postsDirectory}`);
 
 export function getSortedPostsData() {
     const fileNames = fs.readdirSync(postsDirectory);
-    console.log(fileNames);
+    // console.log(fileNames);
     // [pre-render, ssr, ....]
 
     const allPostsData = fileNames.map((fileName) => {
@@ -43,6 +44,7 @@ export function getSortedPostsData() {
 
 // posts 폴더안에 파일명만 구해서 리턴
 export function getAllPostIds() {
+    // 프로젝트 루트 폴더에 posts 라는 폴더안에 파일들 구하기
     const fileNames = fs.readdirSync(postsDirectory);
 
     return fileNames.map((fileName) => {
@@ -57,13 +59,16 @@ export function getAllPostIds() {
 
 export async function getPostData(id: string) {
     console.info("getPostData", id);
+    // posts 폴더안에  (id).md 라는 파일 경로 생성
     const fullPath = path.join(postsDirectory, `${id}.md`);
+
+    // id.md 라는 파일 내용을 읽어 컨텐츠로 만든다.
     const fileContents = fs.readFileSync(fullPath, "utf-8");
 
     // 마크다운파일 obj 형태 생성
     const matterResult = matter(fileContents);
 
-    // 마크다운 파일 html 형태로 리턴
+    // 마크다운 파일 html string 형태로 생성
     const processedContent = await remark().use(remarkHtml).process(matterResult.content);
     const contentHtml = processedContent.toString();
 
